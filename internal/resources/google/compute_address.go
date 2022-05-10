@@ -70,15 +70,18 @@ func (r *ComputeAddress) BuildResource() *schema.Resource {
 
 func (r *ComputeAddress) standardVMComputeAddress(used bool) *schema.CostComponent {
 	usedBy := ""
+	quantity := decimalPtr(decimal.NewFromInt(1))
+
 	if !used {
 		usedBy = "if used by "
+		quantity = nil
 	}
 
 	return &schema.CostComponent{
 		Name:           fmt.Sprintf("IP address (%sstandard VM)", usedBy),
 		Unit:           "hours",
 		UnitMultiplier: decimal.NewFromInt(1),
-		HourlyQuantity: decimalPtr(decimal.NewFromInt(1)),
+		HourlyQuantity: quantity,
 		ProductFilter: &schema.ProductFilter{
 			VendorName:    strPtr("gcp"),
 			Region:        strPtr("global"),
@@ -96,15 +99,18 @@ func (r *ComputeAddress) standardVMComputeAddress(used bool) *schema.CostCompone
 
 func (r *ComputeAddress) preemptibleVMComputeAddress(used bool) *schema.CostComponent {
 	usedBy := ""
+	quantity := decimalPtr(decimal.NewFromInt(1))
+
 	if !used {
 		usedBy = "if used by "
+		quantity = nil
 	}
 
 	return &schema.CostComponent{
 		Name:           fmt.Sprintf("IP address (%spreemptible VM)", usedBy),
 		Unit:           "hours",
 		UnitMultiplier: decimal.NewFromInt(1),
-		HourlyQuantity: decimalPtr(decimal.NewFromInt(1)),
+		HourlyQuantity: quantity,
 		ProductFilter: &schema.ProductFilter{
 			VendorName:    strPtr("gcp"),
 			Region:        strPtr("global"),
@@ -122,15 +128,18 @@ func (r *ComputeAddress) preemptibleVMComputeAddress(used bool) *schema.CostComp
 
 func (r *ComputeAddress) unusedVMComputeAddress(used bool) *schema.CostComponent {
 	usedBy := ""
+	quantity := decimalPtr(decimal.NewFromInt(1))
+
 	if !used {
 		usedBy = "if "
+		quantity = nil
 	}
 
 	return &schema.CostComponent{
 		Name:           fmt.Sprintf("IP address (%sunused)", usedBy),
 		Unit:           "hours",
 		UnitMultiplier: decimal.NewFromInt(1),
-		HourlyQuantity: decimalPtr(decimal.NewFromInt(1)),
+		HourlyQuantity: quantity,
 		ProductFilter: &schema.ProductFilter{
 			VendorName:    strPtr("gcp"),
 			Region:        strPtr(r.Region),
